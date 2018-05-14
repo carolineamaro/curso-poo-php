@@ -23,6 +23,6 @@
 
     "scripts": {
         "test":"vendor/bin/phpunit",
-        "server":"php -S localhost:3000 -t public public/index.php"
+        "server":"php -S localhost:3000 -t src src/index.php"
     }
 }
