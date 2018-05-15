@@ -6,19 +6,20 @@ use Slim\Http\Request;
 use Intervention\Image\ImageManagerStatic;
 use Slim\Http\Response;
 
-$app = new App;
+$app = new App([
+    'settings' => [
+        'displayErrorDetails' => true,
+    ]
+]);
 $app->get('/', function (Request $request, Response $response, array $args) {
-    $imagem = ImageManagerStatic::canvas(1200, 630, '#ff0000');
 
-    $imagem->insert("https://avatars2.githubusercontent.com/u/26804683?s=400&u=7279c9b6b8c513ef10892d8e9830a63399d29343&v=4");
+    $carol = new \App\Imagem\MulherImagem(
+        "https://avatars2.githubusercontent.com/u/26804683?s=400&u=7279c9b6b8c513ef10892d8e9830a63399d29343&v=4",
+        "Caroline");
 
-    $imagem->text('Caroline Correa', 500, 100, function($font) {
-        $font->color('#000000');
-        $font->align('center');
-        $font->valign('center');
-    });
+    \App\Imagem\Salvador::salvar($carol, "carol");
 
-    $response->write($imagem->encode()->getEncoded());
+    $response->write($carol->gerarImagem()->encode()->getEncoded());
     return $response->withHeader('Content-Type', FILEINFO_MIME_TYPE);
 });
 $app->run();
